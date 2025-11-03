@@ -3,11 +3,18 @@ Title: 100+ Breast Cancer Gene Expression Data sets
 Version: 0.99.0
 Date: 2025-10-16
 Authors@R: 
-    c(person("Heidi", "Steadman", email = "hstead05@byu.edu", role = "aut"), 
-    person("Shu-Fei", "Lo", email = "shufeilo@byu.edu", role = "aut"),
-    person("Stephen", "Piccolo", email = "stephen_piccolo@byu.edu", role = "cre")
+    c(person("Heidi", "Steadman", 
+        email = "hstead05@byu.edu", 
+        role = "aut"), 
+    person("Shu-Fei", "Lo", 
+        email = "shufeilo@byu.edu", 
+        role = "aut"),
+    person("Stephen", "Piccolo", 
+        email = "stephen_piccolo@byu.edu", 
+        role = "cre")
     )
-Description: Package that gives users access to 100+ tidied data sets from public data repositories in the form of SummarizedExperiment objects. 
+Description: Package that gives users access to 100+ tidied data sets from 
+    public data repositories in the form of SummarizedExperiment objects. 
 License: file LICENSE
 URL: https://github.com/srp33/AnnotatedBCGEData
 BugReports: https://github.com/srp33/AnnotatedBCGEData//issues
@@ -20,7 +27,8 @@ biocViews:
     ArrayExpress,
     Tissue, 
     MicroarrayData, 
-    SequencingData
+    SequencingData,
+    BreastCancerData
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
