@@ -49,5 +49,6 @@ Imports:
     readr,
     dplyr,
     utils,
-    tibble
+    tibble,
+    tidyr
 LazyData: false

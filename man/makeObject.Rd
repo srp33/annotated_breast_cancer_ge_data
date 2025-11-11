@@ -8,6 +8,8 @@ makeObject(identifier, identifier_list = identifiers)
 }
 \arguments{
 \item{identifier}{name of data set}
+
+\item{identifier_list}{list of identifiers, defaults to current list}
 }
 \value{
 a SummarizedExperiment object for the data set
@@ -17,5 +19,5 @@ Takes a name of data set and passes to identifiers named list
 Uses the vector of identifiers in the list to get URL and download
 }
 \examples{
-makeObject(GSE41197)
+makeObject('GSE41197')
 }

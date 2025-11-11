@@ -68,27 +68,77 @@ about the data at the following links:
 The package itself includes a metadata file as required by Bioconductor.
 This file is a table that lists the name of each object and more
 information about where it came from and how it was accessed. See
-inst/extdata/metadata.csv. When the package is available in
-ExperimentHub, using the query() function will show available data sets.
+inst/extdata/metadata.csv.
 
-``` r
-#library(ExperimentHub)
-#eh = ExperimentHub()
-#query(eh, AnnotatedBCGEData)
+# Filtering Data by Ontology
 
-# this code throws errors because the package is not currently available in ExperimentHub
-```
-
-## Examples
-
-The following is the code required to access the objects within the
-package. Other packages were used in the creation of the package, but
-they should be automatically loaded when the package is installed. These
-packages are included in the NAMESPACE file.
+The following code is required to access the tools and data included in
+AnnotatedBCGEData:
 
 ``` r
 library(AnnotatedBCGEData)
 ```
+
+This package contains several functions that are designed to help users
+filter the included data sets based on their associated ontology terms.
+The first function is `searchDefs`. This function takes two parameters:
+the term to search by and the type of term it is. The options for terms
+are Name, URI, Code, and Definition. If no term type is specified, the
+function defaults to Name.
+
+## Example: Searching for a data set by ontology term name
+
+In this first example of using the `searchDefs` function, we search for
+a particular ontology term, “Progesterone Receptor Status”.
+
+``` r
+searchDefs("Progesterone Receptor Status")
+#> Rows: 198 Columns: 5
+#> ── Column specification ────────────────────────────────────────────────────────
+#> Delimiter: ","
+#> chr (5): URI, Preferred Label, Synonyms, Definitions, code
+#> 
+#> ℹ Use `spec()` to retrieve the full column specification for this data.
+#> ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+#> # A tibble: 1 × 5
+#>   URI                               `Preferred Label` Synonyms Definitions code 
+#>   <chr>                             <chr>             <chr>    <chr>       <chr>
+#> 1 http://ncicb.nci.nih.gov/xml/owl… Progesterone Rec… Progest… Indicates … C161…
+```
+
+The output of calling this function is a tibble containing the URI, the
+name of the term, synonyms, the definition, and the NCIT code associated
+with it. When the correct term is identified, the user can then pass the
+URI to the `searchForDatasets` function, which identifies data sets that
+contain the chosen ontology term.
+
+## Example: Searching for a data set by ontology term definition
+
+In this example, we search for the ontology term by an associated
+definition. Because the definitions are more vague, this may identify
+several similar terms. It is important that the user is able to identify
+the exact term they are looking for.
+
+``` r
+searchDefs("Progesterone receptor", "Definition")
+#> Rows: 198 Columns: 5
+#> ── Column specification ────────────────────────────────────────────────────────
+#> Delimiter: ","
+#> chr (5): URI, Preferred Label, Synonyms, Definitions, code
+#> 
+#> ℹ Use `spec()` to retrieve the full column specification for this data.
+#> ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+#> # A tibble: 2 × 5
+#>   URI                               `Preferred Label` Synonyms Definitions code 
+#>   <chr>                             <chr>             <chr>    <chr>       <chr>
+#> 1 http://ncicb.nci.nih.gov/xml/owl… Progesterone Rec… Progest… Indicates … C161…
+#> 2 http://ncicb.nci.nih.gov/xml/owl… Triple-Negative … Triple … An invasiv… C717…
+```
+
+Again, when the chosen term is identified, it can be passed to the
+`searchForDatasets` function.
+
+# Examples
 
 Downloading this package does not download the data sets onto the user’s
 machine. To load the SummarizedExperiment object for a data set included
@@ -134,6 +184,8 @@ sample_metadata = colData(GSE41197_SE)
 feature_data = rowData(GSE41197_SE)
 ```
 
+## Plot Example 1: Bar plot
+
 In the following example, we first access the matrix of gene expression
 values. To make it easier to analyze, we convert it into a tibble and
 select the first 10 rows. We then used ggplot() to create a bar plot
@@ -156,6 +208,8 @@ exp_tib
 ```
 
 <img src="man/figures/README-plot_example_p_2-1.png" width="100%" />
+
+## Example 2: Boxplot with expression values
 
 Here, we first accessed the matrices for 3 data sets included in
 AnnotatedBCGEData.
@@ -209,6 +263,8 @@ ggplot(combined_samples, aes(x = group, y = Expression_Level, fill = group)) +
 ```
 
 <img src="man/figures/README-plot_example_2_part_3-1.png" width="100%" />
+
+## Example 3: Heat map
 
 In this example, we combine using both the metadata and the expression
 data to create a heat map of gene expression levels.<br> First, we load
@@ -295,6 +351,8 @@ top_variance_map
 
 <img src="man/figures/README-heat_map_3-1.png" width="100%" />
 
+## Example 4: Combining feature data and expression data
+
 In this final example, we use aspects of the feature data along with the
 expression data. <br> <br>
 
@@ -372,7 +430,7 @@ combined_data
 
 <img src="man/figures/README-chr16_boxplot_3-1.png" width="100%" />
 
-## Citation
+# Citation
 
 Below is the citation output from using `citation('AnnotatedBCGEData')`
 in R. Please run this yourself to check for any updates on how to cite
@@ -401,7 +459,7 @@ Please note that the `AnnotatedBCGEData` was only made possible thanks
 to many other R and bioinformatics software authors, which are cited
 either in the vignettes and/or the paper(s) describing this package.
 
-## Development tools
+# Development tools
 
 - Continuous code testing is possible thanks to [GitHub
   actions](https://www.tidyverse.org/blog/2020/04/usethis-1-6-0/)

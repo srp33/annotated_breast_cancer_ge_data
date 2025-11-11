@@ -17,7 +17,7 @@ vignette: >
 ---
 
 
-```{r, setup echo=FALSE, include=FALSE}
+```{r, setup, echo=FALSE, include=FALSE}
 pkg <- read.dcf("../DESCRIPTION", fields = "Package")[1]
 library(pkg, character.only = TRUE)
 ```
@@ -57,11 +57,34 @@ The package itself includes a metadata file as required by Bioconductor. This fi
 
 We will soon include functionality to allow users to look at the data with greater depth.
 
-# Examples
+# Filtering Data by Ontology
 ``` {r load_tidyverse, include = FALSE}
 library(tidyverse)
 library(SummarizedExperiment)
 ```
+This package contains several functions that are designed to help users filter the included data sets based on their associated ontology terms. The first function is `searchDefs`. This function takes two parameters: the term to search by and the type of term it is. The options for terms are Name, URI, Code, and Definition. If no term type is specified, the function defaults to Name. 
+
+## Example: Searching for a data set by ontology term name
+In this first example of using the `searchDefs` function, we search for a particular ontology term, "Progesterone Receptor Status". 
+
+```{r PR_example}
+searchDefs("Progesterone Receptor Status")
+
+```
+
+The output of calling this function is a tibble containing the URI, the name of the term, synonyms, the definition, and the NCIT code associated with it. When the correct term is identified, the user can then pass the URI to the `searchForDatasets` function, which identifies data sets that contain the chosen ontology term.
+
+## Example: Searching for a data set by ontology term definition
+In this example, we search for the ontology term by an associated definition. Because the definitions are more vague, this may identify several similar terms. It is important that the user is able to identify the exact term they are looking for.
+
+```{r PR_example2}
+searchDefs("Progesterone receptor", "Definition")
+
+```
+
+Again, when the chosen term is identified, it can be passed to the `searchForDatasets` function. 
+
+# Examples
 
 The following is the code required to access the objects within the package. Other packages were used in the creation of the package, but they should be automatically loaded when the package is installed. These packages are included in the NAMESPACE file. 
 
@@ -69,7 +92,7 @@ The following is the code required to access the objects within the package. Oth
 library(AnnotatedBCGEData)
 ```
 
-Downloading this package does not download the data sets onto the user's machine. To load the SummarizedExperiment object for a data set included in AnnotatedBCGEData, the user chooses the name of the data set and passes it as string to the function makeObject. This function downloads the data and creates the SummarizedExperiment object that is accessible to the user. To see a comprehensive list of all data sets included and where they came from, see the metadata.csv file in inst/extdata/metadata.csv. This will be accessible in the code when the package is available in ExperimentHub. <br>
+Downloading this package does not download the data sets onto the user's machine. To load the SummarizedExperiment object for a data set included in AnnotatedBCGEData, the user chooses the name of the data set and passes it as string to the function makeObject. This function downloads the data and creates the SummarizedExperiment object that is accessible to the user. To see a comprehensive list of all data sets included and where they came from, see the metadata.csv file in inst/extdata/metadata.csv. <br>
 <br>
 The SummarizedExperiment object for each data set includes 3 matrices. The first, which we load as expression_data, is a matrix with the samples as columns and genes as rows. The Ensembl gene ID is used as the row names. The data in the actual matrix is the expression level of the gene for the sample. <br>
 <br>
