@@ -93,5 +93,13 @@ identifiers <- list(
     GSE10797 = c('17429390','GSE10797.tsv.gz', 
                  '17429390', 'GSE10797_metadata.tsv'),
     GSE59772 = c('17429395','GSE59772.tsv.gz', 
-                 '17429395', 'GSE59772_metadata.tsv')
+                 '17429395', 'GSE59772_metadata.tsv'),
+    GSE10281 = c('17665426', 'GSE10281.tsv.gz',
+                 '17665426', 'GSE10281_metadata.tsv'),
+    GSE10780 = c("17665492", "GSE10780.tsv.gz",
+                 "17665492", "GSE10780_metadata.tsv"),
+    GSE96058_NextSeq = c("17665296", "GSE96058_NextSeq.tsv.gz",
+                         "17665296", "GSE96058_NextSeq_metadata.tsv"),
+    GSE96058_HiSeq = c("", "GSE96058_HiSeq.tsv.gz",
+                       "", "GSE96058_HiSeq_metadata.tsv")
 )

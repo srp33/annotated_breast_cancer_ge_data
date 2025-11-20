@@ -33,6 +33,10 @@ The get_code function gets just the NCIT code from the NCIT field name.
 The function is then used with the .apply function for each dataframe,
 making a new column with just the NCIT code.
 
+Next, we add a data_type column to each dataframe with the type of
+data included (categorical, numerical, etc). This is necessary for
+when the data is combined into one dataframe.
+
 """
 
 ont_cate = pd.read_excel("mapping_file.xlsx", sheet_name="Categorical")
@@ -64,14 +68,19 @@ ont_cate["NCIT_field_code"] = ont_cate.apply(get_codes, axis=1)
 ont_nume["NCIT_field_code"] = ont_nume.apply(get_codes, axis=1)
 ont_rang["NCIT_field_code"] = ont_rang.apply(get_codes, axis=1)
 
+ont_cate["data_type"] = "categorical"
+ont_nume["data_type"] = "numerical"
+ont_rang["data_type"] = "ranged"
+
 
 """
-This code writes the adjusted dataframes to csv files. Make
-sure you upload the updated csv files to Zenodo after they
-have been updated, and that the code pulls the correct version. 
+This code first combines the three dataframes into one, then
+writes the adjusted dataframes to csv files. Make sure you
+upload the updated csv file to Zenodo after it has been 
+updated, and that the code pulls the correct version. 
 
 """
 
-ont_cate.to_csv("mapped_categorical.csv", index=False)
-ont_nume.to_csv("mapped_numerical.csv", index=False)
-ont_rang.to_csv("mapped_ranged.csv", index=False)
+mapped_df = pd.concat([ont_cate, ont_nume, ont_rang], ignore_index=True)
+
+mapped_df.to_csv("filtered_mapped_data.csv", index=False)

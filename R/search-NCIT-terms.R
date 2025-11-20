@@ -1,7 +1,5 @@
-#' @importFrom readr read_csv
 #' @importFrom stringr regex str_detect
 #' @importFrom dplyr rename filter select pull %>% bind_rows
-#' @importFrom utils download.file
 #' @importFrom tidyr separate_rows
 
 utils::globalVariables(c(
@@ -13,21 +11,7 @@ utils::globalVariables(c(
     "label"
 ))
 
-## Download .csv NCIT definitions file from Zenodo
-## This code is different from downloadZenodoFile because it is a csv
-
-downloadCSVFile <- function(url) {
-    temp_file_path <- str_c(tempdir(), "/", "NCIT_definitions_filtered.csv")
-    
-    if (!file.exists(temp_file_path)) {
-        download.file(url, temp_file_path, mode="wb")
-    }
-    
-    return (read_csv(temp_file_path))
-}
-
-NCIT_defs_url <- "https://zenodo.org/records/17545810/files/NCIT_definitions_filtered.csv?download=1"
-
+NCIT_identifiers <- c("17603177", "NCIT_definitions_filtered.tsv.gz")
 
 #' Function that searches NCIT definitions file
 #' 
@@ -48,7 +32,7 @@ searchDefs <- function(term, term_type="Name") {
                     " Try: Name, URI, Code, or Definition"))
     }
     
-    NCIT_defs = downloadCSVFile(NCIT_defs_url)
+    NCIT_defs <- downloadZenodoFile(NCIT_identifiers)
     
     if (term_type == "Name") {
         df <- searchNames(term, NCIT_defs)
